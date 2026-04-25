@@ -1,0 +1,6 @@
+{
+  "name": "TugasKu - Pengingat Jadwal Tugas",
+  "description": "Aplikasi pengingat jadwal tugas digital dengan penyimpanan cloud, kategori tugas, dan notifikasi cerdas.",
+  "requestFramePermissions": ["notifications"],
+  "majorCapabilities": []
+}
