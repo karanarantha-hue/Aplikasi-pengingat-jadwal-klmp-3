@@ -15,6 +15,12 @@ export default function Dashboard() {
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const notifications = [
+    { id: 1, title: 'Tugas Matematika', message: 'Deadline dalam 2 jam!', time: '2j yang lalu' },
+    { id: 2, title: 'Grup Belajar', message: 'Andi bergabung ke grup.', time: '5j yang lalu' },
+  ];
 
   const filteredTasks = tasks.filter((task) => {
     const matchesCategory = selectedCategory === 'All' || task.category === selectedCategory;
@@ -46,7 +52,7 @@ export default function Dashboard() {
             <input
               type="text"
               placeholder="Cari tugas..."
-              className="bg-slate-50 border border-slate-200 pl-11 pr-6 py-2.5 rounded-xl w-80 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-sm"
+              className="bg-slate-50 border border-slate-200 pl-11 pr-6 py-2.5 rounded-xl w-80 focus:outline-none focus:ring-2 focus:ring-blue-800/20 transition-all text-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -57,11 +63,45 @@ export default function Dashboard() {
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <span className="text-[10px] font-bold uppercase tracking-wider">Cloud Terkoneksi</span>
             </div>
-            <button className="relative w-10 h-10 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-colors">
-              <Bell className="w-4 h-4 text-slate-600" />
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-600 rounded-full border-2 border-white" />
-            </button>
-            <div className="w-10 h-10 rounded-full bg-blue-600 border-2 border-white shadow-sm flex items-center justify-center text-white font-bold text-xs">
+            <div className="relative">
+              <button 
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="relative w-10 h-10 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-colors"
+              >
+                <Bell className="w-4 h-4 text-slate-600" />
+                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-800 rounded-full border-2 border-white" />
+              </button>
+
+              <AnimatePresence>
+                {showNotifications && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute right-0 mt-4 w-80 bg-white rounded-3xl border border-slate-200 shadow-2xl z-50 p-6"
+                  >
+                    <div className="flex justify-between items-center mb-6">
+                      <h4 className="font-black text-sm uppercase tracking-widest text-slate-900">Notifikasi</h4>
+                      <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">New</span>
+                    </div>
+                    <div className="space-y-4">
+                      {notifications.map((n) => (
+                        <div key={n.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer group">
+                          <p className="text-xs font-black text-slate-900 mb-1 group-hover:text-blue-800 transition-colors">{n.title}</p>
+                          <p className="text-[11px] text-slate-500 mb-2">{n.message}</p>
+                          <p className="text-[10px] font-bold text-slate-400">{n.time}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="w-full mt-6 py-3 border-t border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
+                      Lihat Semua
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <div className="w-10 h-10 rounded-full bg-black border-2 border-white shadow-sm flex items-center justify-center text-white font-bold text-xs">
               K
             </div>
           </div>
@@ -73,23 +113,23 @@ export default function Dashboard() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-10 text-white shadow-xl shadow-blue-500/10 flex flex-col justify-between relative overflow-hidden"
+              className="col-span-3 bg-gradient-to-br from-blue-700 to-blue-900 rounded-[2.5rem] p-10 text-white shadow-xl shadow-blue-900/10 flex flex-col justify-between relative overflow-hidden"
             >
               <div className="relative z-10">
-                <h1 className="text-4xl font-extrabold leading-tight mb-4 tracking-tight">Selamat Datang,<br />Pelajar Hebat!</h1>
-                <p className="text-blue-100 opacity-80 text-lg">Ada <span className="font-black text-white">{stats.pending}</span> tugas penting yang menunggumu hari ini.</p>
+                <h1 className="text-4xl font-extrabold leading-tight mb-4 tracking-tight text-black">Selamat Datang,<br />Pelajar Hebat!</h1>
+                <p className="text-black opacity-80 text-lg font-medium">Ada <span className="font-black text-black">{stats.pending}</span> tugas penting yang menunggumu hari ini.</p>
               </div>
               <div className="flex gap-4 relative z-10 pt-8">
                 <button 
                   onClick={() => setIsModalOpen(true)}
-                  className="px-8 py-4 bg-white text-blue-700 font-bold rounded-2xl shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+                  className="px-8 py-4 bg-white text-black font-black rounded-2xl shadow-xl hover:scale-105 transition-all flex items-center gap-2"
                 >
-                  Buat Jadwal Baru
+                  Tambah Tugas Baru
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
-                <button className="px-6 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-2xl hover:bg-white/20 transition-all flex items-center gap-2">
+                <button className="px-6 py-4 bg-white/30 backdrop-blur-md text-black font-black rounded-2xl hover:bg-white/40 transition-all flex items-center gap-2">
                   <Users className="w-4 h-4" />
-                  Grup Belajar
+                  Tambah Teman / Grup
                 </button>
               </div>
               
@@ -97,45 +137,11 @@ export default function Dashboard() {
               <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
             </motion.div>
 
-            {/* Calendar Mini Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="col-span-1 bento-card p-8 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Digital Calendar</h3>
-                  <Share2 className="w-4 h-4 text-slate-300 group-hover:text-blue-500 cursor-pointer transition-colors" />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-sm font-medium text-slate-600">Terbaik untuk memantau deadline besar.</p>
-                  <div className="flex -space-x-2">
-                    {[1,2,3].map(i => (
-                      <div key={i} className="w-8 h-8 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-slate-400">
-                        U{i}
-                      </div>
-                    ))}
-                    <div className="w-8 h-8 rounded-full bg-blue-50 border-2 border-white flex items-center justify-center text-[10px] font-bold text-blue-600">
-                      +4
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button 
-                onClick={() => setViewMode('calendar')}
-                className="w-full py-3 bg-slate-50 text-slate-900 rounded-xl font-bold text-sm hover:bg-slate-100 transition-colors"
-              >
-                Buka Kalender Full
-              </button>
-            </motion.div>
-
             {/* Cloud/Collaboration Status */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.1 }}
               className="col-span-1 bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden flex flex-col justify-between group"
             >
               <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform">
@@ -144,13 +150,13 @@ export default function Dashboard() {
               <div>
                 <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Cloud & Kolaborasi</h3>
                 <div className="space-y-3 relative z-10">
-                  <div className="bg-white/5 p-4 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                    <p className="text-[10px] text-blue-400 font-bold mb-1 uppercase tracking-wider">Sync Berhasil</p>
-                    <p className="text-sm font-medium opacity-90">Data aman di awan.</p>
+                  <div className="bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
+                    <p className="text-[10px] text-black font-black mb-1 uppercase tracking-wider">Sync Berhasil</p>
+                    <p className="text-sm font-black text-black">Data aman di awan.</p>
                   </div>
-                  <div className="bg-white/5 p-4 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                    <p className="text-[10px] text-emerald-400 font-bold mb-1 uppercase tracking-wider">Shared Tugas</p>
-                    <p className="text-sm font-medium opacity-90">2 teman baru bergabung.</p>
+                  <div className="bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
+                    <p className="text-[10px] text-black font-black mb-1 uppercase tracking-wider">Shared Tugas</p>
+                    <p className="text-sm font-black text-black">2 teman baru bergabung.</p>
                   </div>
                 </div>
               </div>
@@ -165,30 +171,29 @@ export default function Dashboard() {
 
           {/* Main Content Area */}
           <div className="grid grid-cols-4 gap-6">
-            <div className="col-span-3">
-              <section className="bg-white rounded-[2.5rem] border border-slate-200 p-10 shadow-sm min-h-[500px]">
-                <AnimatePresence mode="wait">
-                  {viewMode === 'calendar' ? (
-                    <motion.div key="calendar" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                      <Calendar tasks={filteredTasks} />
-                    </motion.div>
-                  ) : (
-                    <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                      <div className="flex justify-between items-center mb-10">
-                        <div>
-                          <h2 className="text-2xl font-extrabold tracking-tight">Tugas Terdekat</h2>
-                          <p className="text-sm text-slate-400">Total {filteredTasks.length} jadwal aktif.</p>
-                        </div>
-                        <div className="flex gap-2">
-                           <span className="px-5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-600">
-                            {selectedCategory === 'All' ? 'Semua Kategori' : selectedCategory}
-                           </span>
-                        </div>
-                      </div>
-                      <TaskList tasks={filteredTasks} onToggle={toggleTask} onDelete={deleteTask} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+            <div className="col-span-3 space-y-8">
+              {/* Task List Section */}
+              <section className="bg-white rounded-[2.5rem] border border-slate-200 p-10 shadow-sm">
+                <div className="flex justify-between items-center mb-10">
+                  <div>
+                    <h2 className="text-2xl font-extrabold tracking-tight">Tugas Terdekat</h2>
+                    <p className="text-sm text-slate-400">Total {filteredTasks.length} jadwal aktif.</p>
+                  </div>
+                  <div className="flex gap-2">
+                     <span className="px-5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-600">
+                      {selectedCategory === 'All' ? 'Semua Kategori' : selectedCategory}
+                     </span>
+                  </div>
+                </div>
+                <TaskList tasks={filteredTasks} onToggle={toggleTask} onDelete={deleteTask} />
+              </section>
+
+              {/* Calendar Section - Below Task List */}
+              <section className="bg-white rounded-[2.5rem] border border-slate-200 p-10 shadow-sm">
+                <div className="flex justify-between items-center mb-8">
+                  <h2 className="text-2xl font-extrabold tracking-tight">Kalender Akademik</h2>
+                </div>
+                <Calendar tasks={filteredTasks} />
               </section>
             </div>
             
@@ -199,7 +204,7 @@ export default function Dashboard() {
                   <svg className="w-full h-full -rotate-90">
                     <circle cx="50%" cy="50%" r="40%" fill="none" stroke="#f1f5f9" strokeWidth="12" />
                     <circle 
-                      cx="50%" cy="50%" r="40%" fill="none" stroke="#2563eb" strokeWidth="12" 
+                      cx="50%" cy="50%" r="40%" fill="none" stroke="#1e40af" strokeWidth="12" 
                       strokeDasharray={`${(stats.completed / (stats.total || 1)) * 251.2} 251.2`}
                       strokeLinecap="round"
                     />

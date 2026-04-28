@@ -57,7 +57,7 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
               <div className="p-12 pb-8 bg-slate-50 border-b border-slate-100">
                 <div className="flex justify-between items-center mb-10">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-blue-800 rounded-lg flex items-center justify-center">
                       <BookOpen className="text-white w-4 h-4" />
                     </div>
                     <h2 className="text-xl font-black text-slate-800 tracking-tight">Input Jadwal</h2>
@@ -145,9 +145,9 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
                   type="submit"
                   disabled={!title}
                   className={cn(
-                    "w-full flex items-center justify-center gap-4 py-6 rounded-[2rem] font-bold text-lg transition-all",
+                    "w-full flex items-center justify-center gap-4 py-6 rounded-[2rem] font-black text-lg transition-all",
                     title 
-                      ? "bg-blue-600 text-white shadow-xl shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98]" 
+                      ? "bg-blue-800 text-black shadow-xl shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98]" 
                       : "bg-slate-100 text-slate-300 cursor-not-allowed"
                   )}
                 >

@@ -27,15 +27,15 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       {/* Decorative Elements */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.1, scale: 1 }}
+        animate={{ opacity: 0.15, scale: 1 }}
         transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute -top-20 -left-20 w-96 h-96 bg-[#5A5A40] rounded-full blur-3xl"
+        className="absolute -top-20 -left-20 w-96 h-96 bg-blue-800 rounded-full blur-3xl"
       />
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.1, scale: 1 }}
+        animate={{ opacity: 0.15, scale: 1 }}
         transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute -bottom-20 -right-20 w-96 h-96 bg-[#FF6321] rounded-full blur-3xl"
+        className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-600 rounded-full blur-3xl"
       />
 
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
@@ -51,12 +51,12 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             <span className="font-sans font-bold text-xl tracking-tight text-[#141414]">TugasKu</span>
           </div>
 
-          <h1 className="font-sans text-6xl md:text-7xl font-bold text-[#141414] leading-[0.9] mb-6 tracking-tighter">
+          <h1 className="font-sans text-6xl md:text-7xl font-bold text-slate-900 leading-[0.9] mb-6 tracking-tighter">
             Kelola Tugas <br /> 
-            <span className="text-[#5A5A40] italic">Lebih Cerdas.</span>
+            <span className="text-black italic">Lebih Cerdas.</span>
           </h1>
           
-          <p className="text-[#141414] opacity-60 text-lg mb-8 max-w-sm leading-relaxed">
+          <p className="text-slate-600 text-lg mb-8 max-w-sm leading-relaxed">
             Asisten digital untuk mengatur jadwal tugas, pelajaran, dan ujian Anda dengan pengingat cerdas tingkat lanjut.
           </p>
 
@@ -64,7 +64,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleStart}
-            className="group flex items-center gap-4 bg-[#141414] text-white px-8 py-5 rounded-full font-bold text-lg transition-shadow hover:shadow-2xl hover:shadow-[#141414]/20"
+            className="group flex items-center gap-4 bg-blue-800 text-black px-8 py-5 rounded-full font-black text-lg transition-shadow hover:shadow-2xl hover:shadow-blue-900/20"
           >
             Mulai Input Jadwal
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
@@ -90,9 +90,9 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
 
             <div className="space-y-6">
               {[
-                { title: 'Ujian Matematika', date: 'Besok, 08:00', cat: 'Ujian', color: '#FF6321' },
-                { title: 'Tugas Sejarah', date: '27 April, 23:59', cat: 'Tugas', color: '#5A5A40' },
-                { title: 'Input Jadwal Baru', date: 'Sekarang', cat: '+', color: '#141414' },
+                { title: 'Ujian Matematika', date: 'Besok, 08:00', cat: 'Ujian', color: '#EF4444' },
+                { title: 'Tugas Sejarah', date: '27 April, 23:59', cat: 'Tugas', color: '#3B82F6' },
+                { title: 'Selesaikan Laporan', date: 'Hari ini', cat: 'Personal', color: '#10B981' },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -120,9 +120,9 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="absolute -top-10 -right-6 bg-[#FF6321] text-white p-4 rounded-3xl shadow-xl font-bold rotate-12"
+            className="absolute -top-10 -right-6 bg-blue-800 text-black p-4 rounded-3xl shadow-xl font-black rotate-12"
           >
-            Notifikasi On! 🔔
+            Aplikasi Aktif! 🚀
           </motion.div>
         </motion.div>
       </div>

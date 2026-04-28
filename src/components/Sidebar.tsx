@@ -37,34 +37,18 @@ export default function Sidebar({
   return (
     <aside className="w-80 bg-white border-r border-slate-200 flex flex-col p-8 h-screen sticky top-0 overflow-y-auto no-scrollbar">
       <div className="flex items-center gap-3 mb-14 px-2">
-        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <div className="w-10 h-10 bg-blue-800 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20">
           <FolderOpen className="text-white w-5 h-5" />
         </div>
         <span className="font-sans font-black text-xl tracking-tighter text-slate-900 uppercase">TugasKu</span>
       </div>
 
       <div className="space-y-1 mb-12">
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] px-4 mb-5">Main View</p>
-        <button
-          onClick={() => onViewChange('list')}
-          className={cn(
-            "w-full flex items-center gap-3 px-5 py-4 rounded-2xl transition-all font-bold text-sm",
-            activeView === 'list' ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20" : "text-slate-500 hover:bg-slate-50"
-          )}
-        >
+        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] px-4 mb-5">Manajemen Jadwal</p>
+        <div className="px-5 py-4 rounded-2xl bg-blue-800 text-black shadow-xl shadow-blue-900/20 flex items-center gap-3">
           <ListTodo className="w-5 h-5" />
-          <span>Daftar Tugas</span>
-        </button>
-        <button
-          onClick={() => onViewChange('calendar')}
-          className={cn(
-            "w-full flex items-center gap-3 px-5 py-4 rounded-2xl transition-all font-bold text-sm",
-            activeView === 'calendar' ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20" : "text-slate-500 hover:bg-slate-50"
-          )}
-        >
-          <CalendarIcon className="w-5 h-5" />
-          <span>Kalender</span>
-        </button>
+          <span className="font-black text-sm uppercase">Dasbor Utama</span>
+        </div>
       </div>
 
       <div className="space-y-1 mb-10 overflow-y-auto no-scrollbar flex-1">

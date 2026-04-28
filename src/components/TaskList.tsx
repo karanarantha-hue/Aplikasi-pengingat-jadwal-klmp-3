@@ -65,7 +65,7 @@ export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
                 onClick={() => onToggle(task.id)}
                 className={cn(
                   "shrink-0 transition-colors",
-                  task.completed ? "text-blue-600" : "text-slate-300 group-hover:text-blue-500"
+                  task.completed ? "text-blue-800" : "text-slate-300 group-hover:text-blue-700"
                 )}
               >
                 {task.completed ? (
@@ -94,7 +94,7 @@ export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
                 <div className="flex items-center gap-4 text-xs font-semibold text-slate-400">
                   <span className={cn(
                     "flex items-center gap-1.5",
-                    isOverdue ? "text-red-500" : isTaskToday ? "text-blue-600" : ""
+                    isOverdue ? "text-red-500" : isTaskToday ? "text-blue-800" : ""
                   )}>
                     <Clock className="w-3.5 h-3.5" />
                     {format(new Date(task.dueDate), 'd MMM, HH:mm', { locale: localeID })}
@@ -110,7 +110,7 @@ export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
                 <button
                   onClick={() => handleShare(task)}
                   title="Bagikan ke teman"
-                  className="p-3 rounded-xl text-slate-300 hover:text-blue-600 hover:bg-blue-50 transition-all opacity-0 group-hover:opacity-100"
+                  className="p-3 rounded-xl text-slate-300 hover:text-blue-800 hover:bg-blue-100 transition-all opacity-0 group-hover:opacity-100"
                 >
                   <Users className="w-5 h-5" />
                 </button>
