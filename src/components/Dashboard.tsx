@@ -59,9 +59,9 @@ export default function Dashboard() {
           </div>
           
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-full border border-green-100">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-black rounded-full border border-green-100">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Cloud Terkoneksi</span>
+              <span className="text-[10px] font-black uppercase tracking-wider">Cloud Terkoneksi</span>
             </div>
             <div className="relative">
               <button 
@@ -148,7 +148,7 @@ export default function Dashboard() {
                 <Cloud className="w-32 h-32" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Cloud & Kolaborasi</h3>
+                <h3 className="text-xs font-black text-black uppercase tracking-widest mb-6">Cloud & Kolaborasi</h3>
                 <div className="space-y-3 relative z-10">
                   <div className="bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
                     <p className="text-[10px] text-black font-black mb-1 uppercase tracking-wider">Sync Berhasil</p>
@@ -161,7 +161,7 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="pt-6 relative z-10">
-                <div className="flex items-center gap-2 text-xs text-slate-500">
+                <div className="flex items-center gap-2 text-xs text-black font-black">
                   <Cloud className="w-3 h-3" />
                   Storage: 85% Free
                 </div>
