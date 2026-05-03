@@ -49,7 +49,7 @@ export default function Sidebar({
       )}
       
       <div className="flex items-center gap-3 mb-14 px-2">
-        <div className="w-10 h-10 bg-blue-800 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20">
+        <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
           <FolderOpen className="text-white w-5 h-5" />
         </div>
         <span className="font-sans font-black text-xl tracking-tighter text-slate-900 uppercase">TugasKu</span>
@@ -57,8 +57,8 @@ export default function Sidebar({
 
       <div className="space-y-1 mb-12">
         <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] px-4 mb-5">Manajemen Jadwal</p>
-        <div className="px-5 py-4 rounded-2xl bg-blue-800 text-black shadow-xl shadow-blue-900/20 flex items-center gap-3">
-          <ListTodo className="w-5 h-5" />
+        <div className="px-5 py-4 rounded-2xl bg-black text-white shadow-xl shadow-black/20 flex items-center gap-3">
+          <ListTodo className="w-5 h-5 text-white" />
           <span className="font-black text-sm uppercase">Dasbor Utama</span>
         </div>
       </div>

@@ -29,13 +29,13 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 0.15, scale: 1 }}
         transition={{ duration: 2, repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute -top-20 -left-20 w-96 h-96 bg-blue-800 rounded-full blur-3xl"
+        className="absolute -top-20 -left-20 w-96 h-96 bg-slate-400 rounded-full blur-3xl"
       />
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 0.15, scale: 1 }}
         transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-600 rounded-full blur-3xl"
+        className="absolute -bottom-20 -right-20 w-96 h-96 bg-slate-300 rounded-full blur-3xl"
       />
 
       <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 pt-10 lg:pt-0">
@@ -65,7 +65,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleStart}
-            className="group flex items-center gap-4 bg-blue-800 text-black px-8 py-5 rounded-full font-black text-lg transition-shadow hover:shadow-2xl hover:shadow-blue-900/20"
+            className="group flex items-center gap-4 bg-black text-white px-8 py-5 rounded-full font-black text-lg transition-shadow hover:shadow-2xl hover:shadow-black/20"
           >
             Mulai Input Jadwal
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
@@ -121,7 +121,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="absolute -top-10 -right-6 bg-blue-800 text-black p-4 rounded-3xl shadow-xl font-black rotate-12"
+            className="absolute -top-10 -right-6 bg-black text-white p-4 rounded-3xl shadow-xl font-black rotate-12"
           >
             Aplikasi Aktif! 🚀
           </motion.div>

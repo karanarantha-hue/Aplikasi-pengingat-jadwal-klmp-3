@@ -100,7 +100,7 @@ export default function Dashboard() {
                 className="relative w-10 h-10 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-colors"
               >
                 <Bell className="w-4 h-4 text-slate-600" />
-                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-800 rounded-full border-2 border-white" />
+                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-black rounded-full border-2 border-white" />
               </button>
 
               <AnimatePresence>
@@ -113,12 +113,12 @@ export default function Dashboard() {
                   >
                     <div className="flex justify-between items-center mb-6">
                       <h4 className="font-black text-sm uppercase tracking-widest text-slate-900">Notifikasi</h4>
-                      <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">New</span>
+                      <span className="text-[10px] font-bold text-white bg-black px-2 py-1 rounded-full">New</span>
                     </div>
                     <div className="space-y-4">
                       {notifications.map((n) => (
                         <div key={n.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer group">
-                          <p className="text-xs font-black text-slate-900 mb-1 group-hover:text-blue-800 transition-colors">{n.title}</p>
+                          <p className="text-xs font-black text-slate-900 mb-1 group-hover:text-black transition-colors">{n.title}</p>
                           <p className="text-[11px] text-slate-500 mb-2">{n.message}</p>
                           <p className="text-[10px] font-bold text-slate-400">{n.time}</p>
                         </div>
@@ -144,11 +144,11 @@ export default function Dashboard() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="col-span-1 lg:col-span-3 bg-gradient-to-br from-blue-700 to-blue-900 rounded-[2.5rem] p-8 lg:p-10 text-white shadow-xl shadow-blue-900/10 flex flex-col justify-between relative overflow-hidden"
+              className="col-span-1 lg:col-span-3 bg-zinc-950 rounded-[2.5rem] p-8 lg:p-10 text-white shadow-xl shadow-black/10 flex flex-col justify-between relative overflow-hidden"
             >
               <div className="relative z-10">
-                <h1 className="text-3xl lg:text-4xl font-extrabold leading-tight mb-4 tracking-tight text-black">Selamat Datang,<br />Pelajar Hebat!</h1>
-                <p className="text-black opacity-80 text-base lg:text-lg font-medium">Ada <span className="font-black text-black">{stats.pending}</span> tugas penting hari ini.</p>
+                <h1 className="text-3xl lg:text-4xl font-extrabold leading-tight mb-4 tracking-tight text-white">Selamat Datang,<br />Pelajar Hebat!</h1>
+                <p className="text-zinc-400 text-base lg:text-lg font-medium">Ada <span className="font-black text-white">{stats.pending}</span> tugas penting hari ini.</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 relative z-10 pt-8">
                 <button 
@@ -235,7 +235,7 @@ export default function Dashboard() {
                   <svg className="w-full h-full -rotate-90">
                     <circle cx="50%" cy="50%" r="40%" fill="none" stroke="#f1f5f9" strokeWidth="12" />
                     <circle 
-                      cx="50%" cy="50%" r="40%" fill="none" stroke="#1e40af" strokeWidth="12" 
+                      cx="50%" cy="50%" r="40%" fill="none" stroke="#000000" strokeWidth="12" 
                       strokeDasharray={`${(stats.completed / (stats.total || 1)) * 251.2} 251.2`}
                       strokeLinecap="round"
                     />
