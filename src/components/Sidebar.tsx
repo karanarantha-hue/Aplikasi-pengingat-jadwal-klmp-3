@@ -4,7 +4,8 @@ import {
   Calendar as CalendarIcon, 
   ListTodo, 
   LogOut,
-  FolderOpen
+  FolderOpen,
+  X
 } from 'lucide-react';
 import { Category } from '../types';
 import { cn } from '../lib/utils';
@@ -17,6 +18,7 @@ interface SidebarProps {
   selectedCategory: Category | 'All';
   onCategoryChange: (cat: Category | 'All') => void;
   onAddTask: () => void;
+  onClose?: () => void;
 }
 
 export default function Sidebar({ 
@@ -25,7 +27,8 @@ export default function Sidebar({
   categories, 
   selectedCategory, 
   onCategoryChange,
-  onAddTask
+  onAddTask,
+  onClose
 }: SidebarProps) {
   const exitFullScreen = () => {
     if (document.fullscreenElement) {
@@ -35,7 +38,16 @@ export default function Sidebar({
   };
 
   return (
-    <aside className="w-80 bg-white border-r border-slate-200 flex flex-col p-8 h-screen sticky top-0 overflow-y-auto no-scrollbar">
+    <aside className="w-80 bg-white border-r border-slate-200 flex flex-col p-8 h-screen sticky top-0 overflow-y-auto no-scrollbar relative">
+      {onClose && (
+        <button 
+          onClick={onClose}
+          className="lg:hidden absolute top-8 right-6 p-2 hover:bg-slate-50 rounded-xl"
+        >
+          <X className="w-5 h-5 text-slate-400" />
+        </button>
+      )}
+      
       <div className="flex items-center gap-3 mb-14 px-2">
         <div className="w-10 h-10 bg-blue-800 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20">
           <FolderOpen className="text-white w-5 h-5" />

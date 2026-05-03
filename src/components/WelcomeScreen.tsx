@@ -38,11 +38,12 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-600 rounded-full blur-3xl"
       />
 
-      <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 pt-10 lg:pt-0">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
+          className="text-center lg:text-left flex flex-col items-center lg:items-start"
         >
           <div className="flex items-center gap-2 mb-6">
             <div className="w-10 h-10 bg-[#141414] rounded-xl flex items-center justify-center">
@@ -51,12 +52,12 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             <span className="font-sans font-bold text-xl tracking-tight text-[#141414]">TugasKu</span>
           </div>
 
-          <h1 className="font-sans text-6xl md:text-7xl font-bold text-slate-900 leading-[0.9] mb-6 tracking-tighter">
-            Kelola Tugas <br /> 
+          <h1 className="font-sans text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1] lg:leading-[0.9] mb-6 tracking-tighter">
+            Kelola Tugas <br className="hidden lg:block" /> 
             <span className="text-black italic">Lebih Cerdas.</span>
           </h1>
           
-          <p className="text-slate-600 text-lg mb-8 max-w-sm leading-relaxed">
+          <p className="text-slate-600 text-base md:text-lg mb-8 max-w-sm leading-relaxed">
             Asisten digital untuk mengatur jadwal tugas, pelajaran, dan ujian Anda dengan pengingat cerdas tingkat lanjut.
           </p>
 
@@ -75,7 +76,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative"
+          className="relative hidden lg:block"
         >
           <div className="bg-white p-8 rounded-[40px] shadow-2xl relative overflow-hidden border border-[#141414]/5">
             <div className="flex justify-between items-center mb-8">

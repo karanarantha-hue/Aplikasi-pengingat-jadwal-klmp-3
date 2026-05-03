@@ -48,45 +48,45 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
             className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[100]"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            initial={{ opacity: 0, scale: 0.95, y: 100 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 30 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-white rounded-[3rem] shadow-2xl z-[101] overflow-hidden border border-slate-200"
+            exit={{ opacity: 0, scale: 0.95, y: 100 }}
+            className="fixed left-0 lg:left-1/2 bottom-0 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 w-full max-w-xl bg-white rounded-t-[3rem] lg:rounded-[3rem] shadow-2xl z-[101] overflow-hidden border border-slate-200 max-h-[90vh] lg:max-h-none overflow-y-auto"
           >
             <form onSubmit={handleSubmit} className="flex flex-col h-full">
-              <div className="p-12 pb-8 bg-slate-50 border-b border-slate-100">
-                <div className="flex justify-between items-center mb-10">
+              <div className="p-8 lg:p-12 pb-6 lg:pb-8 bg-slate-50 border-b border-slate-100">
+                <div className="flex justify-between items-center mb-8 lg:mb-10">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-blue-800 rounded-lg flex items-center justify-center">
                       <BookOpen className="text-white w-4 h-4" />
                     </div>
-                    <h2 className="text-xl font-black text-slate-800 tracking-tight">Input Jadwal</h2>
+                    <h2 className="text-lg lg:text-xl font-black text-slate-800 tracking-tight">Input Jadwal</h2>
                   </div>
                   <button type="button" onClick={onClose} className="p-2 rounded-xl hover:bg-slate-200 transition-colors">
                     <X className="w-5 h-5 text-slate-400" />
                   </button>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 lg:space-y-6">
                   <input
                     autoFocus
-                    placeholder="Judul pelajaran atau tugas..."
-                    className="w-full bg-transparent text-3xl font-black placeholder:text-slate-200 focus:outline-none text-slate-900 tracking-tight"
+                    placeholder="Judul pelajaran..."
+                    className="w-full bg-transparent text-2xl lg:text-3xl font-black placeholder:text-slate-200 focus:outline-none text-slate-900 tracking-tight"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   
                   <textarea
-                    placeholder="Catatan tambahan untuk tugas ini..."
-                    className="w-full bg-transparent text-base placeholder:text-slate-300 focus:outline-none text-slate-500 resize-none h-20"
+                    placeholder="Catatan tambahan..."
+                    className="w-full bg-transparent text-sm lg:text-base placeholder:text-slate-300 focus:outline-none text-slate-500 resize-none h-16 lg:h-20"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
               </div>
 
-              <div className="p-12 space-y-10">
-                <div className="grid grid-cols-2 gap-8">
+              <div className="p-8 lg:p-12 space-y-8 lg:space-y-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
                       <Clock className="w-3 h-3" /> Deadline
@@ -122,14 +122,14 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
                     <Flag className="w-3 h-3" /> Prioritas Tugas
                   </label>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     {(['low', 'medium', 'high'] as const).map((p) => (
                       <button
                         key={p}
                         type="button"
                         onClick={() => setPriority(p)}
                         className={cn(
-                          "flex-1 py-4 rounded-2xl font-bold border-2 transition-all text-xs uppercase tracking-widest",
+                          "flex-1 py-3 lg:py-4 rounded-2xl font-bold border-2 transition-all text-[10px] lg:text-xs uppercase tracking-widest",
                           priority === p 
                             ? "bg-slate-900 text-white border-slate-900 shadow-lg" 
                             : "bg-white text-slate-400 border-slate-100 hover:border-slate-300 hover:text-slate-600"
@@ -145,13 +145,13 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
                   type="submit"
                   disabled={!title}
                   className={cn(
-                    "w-full flex items-center justify-center gap-4 py-6 rounded-[2rem] font-black text-lg transition-all",
+                    "w-full flex items-center justify-center gap-4 py-5 lg:py-6 rounded-2xl lg:rounded-[2rem] font-black text-base lg:text-lg transition-all",
                     title 
                       ? "bg-blue-800 text-black shadow-xl shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98]" 
                       : "bg-slate-100 text-slate-300 cursor-not-allowed"
                   )}
                 >
-                  Simpan ke Jadwal Digital
+                  Simpan Jadwal
                   <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
