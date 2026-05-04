@@ -1,4 +1,4 @@
-export type Category = 'Matematika' | 'Bahasa' | 'Sains' | 'Sejarah' | 'Seni' | 'Ujian' | 'Tugas' | 'Lainnya';
+export type Category = 'Ujian' | 'Tugas' | 'Ulangan' | 'Project';
 
 export interface Task {
   id: string;

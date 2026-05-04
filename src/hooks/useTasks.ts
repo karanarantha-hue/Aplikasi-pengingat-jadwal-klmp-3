@@ -8,14 +8,10 @@ export function useTasks() {
   });
 
   const [categories] = useState<Category[]>([
-    'Matematika',
-    'Bahasa',
-    'Sains',
-    'Sejarah',
-    'Seni',
     'Ujian',
     'Tugas',
-    'Lainnya',
+    'Ulangan',
+    'Project',
   ]);
 
   useEffect(() => {

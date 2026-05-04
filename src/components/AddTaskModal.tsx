@@ -70,7 +70,7 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
                 <div className="space-y-4 lg:space-y-6">
                   <input
                     autoFocus
-                    placeholder="Judul pelajaran..."
+                    placeholder="Judul tugas/kegiatan..."
                     className="w-full bg-transparent text-2xl lg:text-3xl font-black placeholder:text-slate-200 focus:outline-none text-slate-900 tracking-tight"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -101,7 +101,7 @@ export default function AddTaskModal({ isOpen, onClose, onAdd, categories }: Add
 
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                      <Tag className="w-3 h-3" /> Mata Pelajaran
+                      <Tag className="w-3 h-3" /> Jenis Jadwal
                     </label>
                     <div className="relative">
                       <select

@@ -91,9 +91,9 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
 
             <div className="space-y-6">
               {[
-                { title: 'Ujian Matematika', date: 'Besok, 08:00', cat: 'Ujian', color: '#EF4444' },
-                { title: 'Tugas Sejarah', date: '27 April, 23:59', cat: 'Tugas', color: '#3B82F6' },
-                { title: 'Selesaikan Laporan', date: 'Hari ini', cat: 'Personal', color: '#10B981' },
+                { title: 'Persiapan Ujian', date: 'Besok, 08:00', cat: 'Ujian', color: '#EF4444' },
+                { title: 'Tugas Harian', date: 'Selasa, 23:59', cat: 'Tugas', color: '#2563EB' },
+                { title: 'Project Akhir', date: 'Hari ini', cat: 'Project', color: '#8B5CF6' },
               ].map((item, i) => (
                 <motion.div
                   key={i}
