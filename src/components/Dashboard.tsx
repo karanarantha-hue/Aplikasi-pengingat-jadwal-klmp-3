@@ -155,71 +155,89 @@ export default function Dashboard() {
         )}
       </AnimatePresence>
 
-      <div className={cn(
-        "fixed inset-y-0 left-0 z-50 lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out lg:block",
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
-        <Sidebar 
-          activeView={viewMode}
-          onViewChange={setViewMode}
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onCategoryChange={(cat) => {
-            setSelectedCategory(cat);
-            setIsSidebarOpen(false);
-          }}
-          onAddTask={() => setIsModalOpen(true)}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-      </div>
+      {!showNotifications && (
+        <div className={cn(
+          "fixed inset-y-0 left-0 z-50 lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out lg:block",
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}>
+          <Sidebar 
+            activeView={viewMode}
+            onViewChange={setViewMode}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={(cat) => {
+              setSelectedCategory(cat);
+              setIsSidebarOpen(false);
+            }}
+            onAddTask={() => setIsModalOpen(true)}
+            onClose={() => setIsSidebarOpen(false)}
+          />
+        </div>
+      )}
 
       <main className="flex-1 overflow-y-auto no-scrollbar w-full">
-        <nav className="w-full h-20 bg-white border-b border-slate-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10">
+        <nav className="w-full h-20 bg-white border-b border-slate-200 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-10 transition-all">
           <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden p-2 hover:bg-slate-50 rounded-xl"
-            >
-              <Menu className="w-6 h-6 text-slate-600" />
-            </button>
-            <div className="relative group hidden sm:block">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Cari tugas..."
-                className="bg-slate-50 border border-slate-200 pl-11 pr-6 py-2.5 rounded-xl w-40 md:w-80 focus:outline-none focus:ring-2 focus:ring-black/10 transition-all text-sm"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
+            {!showNotifications ? (
+              <>
+                <button 
+                  onClick={() => setIsSidebarOpen(true)}
+                  className="lg:hidden p-2 hover:bg-slate-50 rounded-xl"
+                >
+                  <Menu className="w-6 h-6 text-slate-600" />
+                </button>
+                <div className="relative group hidden sm:block">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Cari tugas..."
+                    className="bg-slate-50 border border-slate-200 pl-11 pr-6 py-2.5 rounded-xl w-40 md:w-80 focus:outline-none focus:ring-2 focus:ring-black/10 transition-all text-sm"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => setShowNotifications(false)}
+                  className="p-2 hover:bg-slate-50 rounded-xl transition-colors"
+                >
+                  <X className="w-6 h-6 text-slate-400" />
+                </button>
+                <span className="font-black text-xs uppercase tracking-widest text-slate-400">Pusat Notifikasi</span>
+              </div>
+            )}
           </div>
           
           <div className="flex items-center gap-3 lg:gap-6">
-            <div className="flex items-center gap-2">
-              <button 
-                onClick={handleCloudSync}
-                disabled={isSyncing}
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl border transition-all",
-                  isSyncing 
-                    ? "bg-slate-50 border-slate-100 text-slate-400" 
-                    : "bg-green-50 border-green-100 text-green-700 hover:bg-green-100"
-                )}
-              >
-                <Cloud className={cn("w-4 h-4", isSyncing && "animate-spin")} />
-                <span className="text-[10px] font-black uppercase tracking-wider hidden sm:block">
-                  {isSyncing ? 'Syncing...' : 'Sinkronisasi'}
-                </span>
-              </button>
-              
-              <button 
-                onClick={() => setIsAddFriendModalOpen(true)}
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 transition-all"
-              >
-                <Share2 className="w-4 h-4" />
-                <span className="text-[10px] font-black uppercase tracking-wider">Kolaborasi</span>
-              </button>
-            </div>
+            {!showNotifications && (
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={handleCloudSync}
+                  disabled={isSyncing}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-xl border transition-all",
+                    isSyncing 
+                      ? "bg-slate-50 border-slate-100 text-slate-400" 
+                      : "bg-green-50 border-green-100 text-green-700 hover:bg-green-100"
+                  )}
+                >
+                  <Cloud className={cn("w-4 h-4", isSyncing && "animate-spin")} />
+                  <span className="text-[10px] font-black uppercase tracking-wider hidden sm:block">
+                    {isSyncing ? 'Syncing...' : 'Sinkronisasi'}
+                  </span>
+                </button>
+                
+                <button 
+                  onClick={() => setIsAddFriendModalOpen(true)}
+                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 transition-all"
+                >
+                  <Share2 className="w-4 h-4" />
+                  <span className="text-[10px] font-black uppercase tracking-wider">Kolaborasi</span>
+                </button>
+              </div>
+            )}
             <div className="relative">
               <button 
                 onClick={handleOpenNotifications}
