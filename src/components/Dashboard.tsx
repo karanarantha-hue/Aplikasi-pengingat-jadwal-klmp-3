@@ -21,7 +21,7 @@ export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [activeNotifications, setActiveNotifications] = useState<{id: string, title: string, message: string, time: string, isNew: boolean}[]>([
-    { id: 'initial-1', title: 'Selamat Datang!', message: 'Selamat datang di TugasKu. Jadualkan tugasmu sekarang.', time: 'Baru saja', isNew: true },
+    { id: 'initial-1', title: 'Selamat Datang!', message: 'Selamat datang di JadwalKu. Jadualkan tugasmu sekarang.', time: 'Baru saja', isNew: true },
   ]);
   const [hasNewNotifications, setHasNewNotifications] = useState(true);
   const [notifiedTaskIds, setNotifiedTaskIds] = useState<Set<string>>(new Set());

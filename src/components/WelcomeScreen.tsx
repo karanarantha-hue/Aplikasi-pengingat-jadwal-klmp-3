@@ -49,7 +49,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             <div className="w-10 h-10 bg-[#141414] rounded-xl flex items-center justify-center">
               <CheckCircle className="text-white w-6 h-6" />
             </div>
-            <span className="font-sans font-bold text-xl tracking-tight text-[#141414]">TugasKu</span>
+            <span className="font-sans font-bold text-xl tracking-tight text-[#141414]">JadwalKu</span>
           </div>
 
           <h1 className="font-sans text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1] lg:leading-[0.9] mb-6 tracking-tighter">

@@ -52,7 +52,7 @@ export default function Sidebar({
         <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
           <FolderOpen className="text-white w-5 h-5" />
         </div>
-        <span className="font-sans font-black text-xl tracking-tighter text-slate-900 uppercase">TugasKu</span>
+        <span className="font-sans font-black text-xl tracking-tighter text-slate-900 uppercase">JadwalKu</span>
       </div>
 
       <div className="space-y-1 mb-10 overflow-y-auto no-scrollbar flex-1">
