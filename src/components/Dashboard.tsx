@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import Calendar from './Calendar';
 import TaskList from './TaskList';
 import AddTaskModal from './AddTaskModal';
+import AddFriendModal from './AddFriendModal';
 import { useTasks } from '../hooks/useTasks';
 import { Category, ViewMode } from '../types';
 import { Search, Bell, User, Cloud, Share2, Users, ArrowUpRight, Menu, X } from 'lucide-react';
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -82,7 +84,7 @@ export default function Dashboard() {
               <input
                 type="text"
                 placeholder="Cari tugas..."
-                className="bg-slate-50 border border-slate-200 pl-11 pr-6 py-2.5 rounded-xl w-40 md:w-80 focus:outline-none focus:ring-2 focus:ring-blue-800/20 transition-all text-sm"
+                className="bg-slate-50 border border-slate-200 pl-11 pr-6 py-2.5 rounded-xl w-40 md:w-80 focus:outline-none focus:ring-2 focus:ring-black/10 transition-all text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -158,7 +160,10 @@ export default function Dashboard() {
                   Tambah Tugas
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
-                <button className="px-6 py-4 bg-white/30 backdrop-blur-md text-black font-black rounded-2xl hover:bg-white/40 transition-all flex items-center justify-center gap-2">
+                <button 
+                  onClick={() => setIsAddFriendModalOpen(true)}
+                  className="px-6 py-4 bg-white/30 backdrop-blur-md text-black font-black rounded-2xl hover:bg-white/40 transition-all flex items-center justify-center gap-2"
+                >
                   <Users className="w-4 h-4" />
                   Tambah Teman
                 </button>
@@ -262,6 +267,10 @@ export default function Dashboard() {
         onClose={() => setIsModalOpen(false)}
         onAdd={addTask}
         categories={categories}
+      />
+      <AddFriendModal
+        isOpen={isAddFriendModalOpen}
+        onClose={() => setIsAddFriendModalOpen(false)}
       />
     </div>
   );

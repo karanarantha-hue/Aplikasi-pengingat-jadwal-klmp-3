@@ -65,7 +65,7 @@ export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
                 onClick={() => onToggle(task.id)}
                 className={cn(
                   "shrink-0 transition-colors",
-                  task.completed ? "text-blue-800" : "text-slate-300 group-hover:text-blue-700"
+                  task.completed ? "text-slate-900" : "text-slate-300 group-hover:text-slate-900"
                 )}
               >
                 {task.completed ? (
@@ -94,7 +94,7 @@ export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] md:text-xs font-semibold text-slate-400">
                   <span className={cn(
                     "flex items-center gap-1.5",
-                    isOverdue ? "text-red-500" : isTaskToday ? "text-blue-800" : ""
+                    isOverdue ? "text-red-500" : isTaskToday ? "text-black" : ""
                   )}>
                     <Clock className="w-3 md:w-3.5 h-3 md:h-3.5" />
                     {format(new Date(task.dueDate), 'd MMM, HH:mm', { locale: localeID })}
@@ -110,7 +110,7 @@ export default function TaskList({ tasks, onToggle, onDelete }: TaskListProps) {
                 <button
                   onClick={() => handleShare(task)}
                   title="Bagikan ke teman"
-                  className="p-2 md:p-3 rounded-xl text-slate-300 hover:text-blue-800 hover:bg-blue-100 transition-all opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
+                  className="p-2 md:p-3 rounded-xl text-slate-300 hover:text-black hover:bg-slate-100 transition-all opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                 >
                   <Users className="w-4 h-4 md:w-5 md:h-5" />
                 </button>
