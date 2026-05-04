@@ -20,6 +20,11 @@ export default function Dashboard() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [activeNotifications, setActiveNotifications] = useState<{id: string, title: string, message: string, time: string, isNew: boolean}[]>([
+    { id: 'initial-1', title: 'Selamat Datang!', message: 'Selamat datang di TugasKu. Jadualkan tugasmu sekarang.', time: 'Baru saja', isNew: true },
+  ]);
+  const [hasNewNotifications, setHasNewNotifications] = useState(true);
+  const [notifiedTaskIds, setNotifiedTaskIds] = useState<Set<string>>(new Set());
 
   const handleCloudSync = () => {
     setIsSyncing(true);
@@ -30,10 +35,51 @@ export default function Dashboard() {
     }, 1500);
   };
 
-  const notifications = [
-    { id: 1, title: 'Tugas Matematika', message: 'Deadline dalam 2 jam!', time: '2j yang lalu' },
-    { id: 2, title: 'Grup Belajar', message: 'Andi bergabung ke grup.', time: '5j yang lalu' },
-  ];
+  // Background checker for task due dates
+  React.useEffect(() => {
+    const checkTasks = () => {
+      const now = new Date();
+      const currentNotifications = [...activeNotifications];
+      let foundNew = false;
+
+      tasks.forEach(task => {
+        if (!task.completed && task.dueDate && !notifiedTaskIds.has(task.id)) {
+          const dueDate = new Date(task.dueDate);
+          // Check if due date is now or in the past (but was just missed/reached)
+          if (dueDate <= now) {
+            const newNotif = {
+              id: `notif-${task.id}`,
+              title: `Waktunya: ${task.title}`,
+              message: `Jadwal ${task.category} Anda sudah tiba!`,
+              time: 'Sekarang',
+              isNew: true
+            };
+            currentNotifications.unshift(newNotif);
+            setNotifiedTaskIds(prev => new Set(prev).add(task.id));
+            foundNew = true;
+          }
+        }
+      });
+
+      if (foundNew) {
+        setActiveNotifications(currentNotifications);
+        setHasNewNotifications(true);
+      }
+    };
+
+    const interval = setInterval(checkTasks, 60000); // Check every minute
+    checkTasks(); // Initial check
+
+    return () => clearInterval(interval);
+  }, [tasks, notifiedTaskIds, activeNotifications]);
+
+  const handleOpenNotifications = () => {
+    setShowNotifications(!showNotifications);
+    if (!showNotifications) {
+      setHasNewNotifications(false);
+      setActiveNotifications(prev => prev.map(n => ({ ...n, isNew: false })));
+    }
+  };
 
   const filteredTasks = tasks.filter((task) => {
     const matchesCategory = selectedCategory === 'All' || task.category === selectedCategory;
@@ -129,11 +175,21 @@ export default function Dashboard() {
             </div>
             <div className="relative">
               <button 
-                onClick={() => setShowNotifications(!showNotifications)}
+                onClick={handleOpenNotifications}
                 className="relative w-10 h-10 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-colors"
               >
-                <Bell className="w-4 h-4 text-slate-600" />
-                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-black rounded-full border-2 border-white" />
+                <motion.div
+                  animate={hasNewNotifications ? { 
+                    rotate: [0, -10, 10, -10, 10, 0],
+                    scale: [1, 1.1, 1] 
+                  } : {}}
+                  transition={{ repeat: hasNewNotifications ? Infinity : 0, duration: 2, repeatDelay: 1 }}
+                >
+                  <Bell className="w-4 h-4 text-slate-600" />
+                </motion.div>
+                {hasNewNotifications && (
+                  <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-600 rounded-full border-2 border-white animate-pulse" />
+                )}
               </button>
 
               <AnimatePresence>
@@ -151,7 +207,7 @@ export default function Dashboard() {
                       animate={{ x: 0 }}
                       exit={{ x: '100%' }}
                       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                      className="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[70] p-8 lg:p-10 border-l border-slate-100"
+                      className="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[70] p-8 lg:p-10 border-l border-slate-100 font-sans"
                     >
                       <div className="flex justify-between items-center mb-10">
                         <div className="flex items-center gap-3">
@@ -169,17 +225,20 @@ export default function Dashboard() {
                       </div>
                       
                       <div className="space-y-4 overflow-y-auto no-scrollbar h-[calc(100vh-280px)]">
-                        {notifications.map((n) => (
-                          <div key={n.id} className="p-5 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer group">
+                        {activeNotifications.map((n) => (
+                          <div key={n.id} className={cn(
+                            "p-5 rounded-3xl border transition-all cursor-pointer group",
+                            n.isNew ? "bg-black text-white border-black" : "bg-slate-50 border-slate-100 hover:bg-slate-100"
+                          )}>
                             <div className="flex justify-between items-start mb-2">
-                              <p className="text-xs font-black text-slate-900 group-hover:text-black transition-colors">{n.title}</p>
-                              <span className="w-2 h-2 bg-black rounded-full" />
+                              <p className={cn("text-xs font-black", n.isNew ? "text-white" : "text-slate-900")}>{n.title}</p>
+                              {n.isNew && <span className="w-2 h-2 bg-white rounded-full animate-pulse" />}
                             </div>
-                            <p className="text-[12px] text-slate-500 mb-3 leading-relaxed">{n.message}</p>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{n.time}</p>
+                            <p className={cn("text-[12px] mb-3 leading-relaxed", n.isNew ? "text-white/70" : "text-slate-500")}>{n.message}</p>
+                            <p className={cn("text-[10px] font-bold uppercase tracking-wider", n.isNew ? "text-white/40" : "text-slate-400")}>{n.time}</p>
                           </div>
                         ))}
-                        {notifications.length === 0 && (
+                        {activeNotifications.length === 0 && (
                           <div className="flex flex-col items-center justify-center py-20 text-slate-300">
                             <Bell className="w-12 h-12 mb-4 opacity-20" />
                             <p className="text-sm font-bold">Tidak ada notifikasi baru</p>
@@ -188,7 +247,10 @@ export default function Dashboard() {
                       </div>
 
                       <div className="absolute bottom-10 left-8 right-8">
-                        <button className="w-full py-5 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] hover:bg-slate-100 hover:text-slate-900 transition-all">
+                        <button 
+                          onClick={() => setActiveNotifications([])}
+                          className="w-full py-5 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] hover:bg-slate-100 hover:text-slate-900 transition-all"
+                        >
                           Bersihkan Semua
                         </button>
                       </div>
