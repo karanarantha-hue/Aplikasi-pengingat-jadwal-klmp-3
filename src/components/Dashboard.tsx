@@ -45,22 +45,27 @@ export default function Dashboard() {
   const playNotificationSound = () => {
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
-      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.05);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-
-      oscillator.start(audioCtx.currentTime);
-      oscillator.stop(audioCtx.currentTime + 0.5);
+      const playNote = (freq: number, startTime: number, duration: number) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(0.1, startTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+      
+      const now = audioCtx.currentTime;
+      // Friendly ascending chime
+      playNote(523.25, now, 0.4); // C5
+      playNote(659.25, now + 0.12, 0.4); // E5
+      playNote(783.99, now + 0.24, 0.5); // G5
     } catch (e) {
-      console.log('Audio playback failed', e);
+      console.log('Audio blocked', e);
     }
   };
 
@@ -242,14 +247,14 @@ export default function Dashboard() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       onClick={() => setShowNotifications(false)}
-                      className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[60]"
+                      className="fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[100]"
                     />
                     <motion.div
                       initial={{ x: '100%' }}
                       animate={{ x: 0 }}
                       exit={{ x: '100%' }}
                       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                      className="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[70] p-8 lg:p-10 border-l border-slate-100 font-sans"
+                      className="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] z-[110] p-8 lg:p-10 border-l border-slate-100 font-sans"
                     >
                       <div className="flex justify-between items-center mb-10">
                         <div className="flex items-center gap-3">
