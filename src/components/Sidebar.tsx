@@ -61,24 +61,31 @@ export default function Sidebar({
           onClick={() => onCategoryChange('All')}
           className={cn(
             "w-full flex items-center gap-3 px-5 py-4 rounded-2xl transition-all text-xs font-bold",
-            selectedCategory === 'All' ? "text-slate-900 bg-slate-100" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+            selectedCategory === 'All' 
+              ? "text-white bg-black shadow-lg shadow-black/10" 
+              : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
           )}
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-slate-900" />
+          <div className={cn("w-2 h-2 rounded-full", selectedCategory === 'All' ? "bg-white" : "bg-black")} />
           <span>Semua Jadwal</span>
         </button>
         {categories.map((cat) => {
           const config = CATEGORY_CONFIG[cat];
+          const isActive = selectedCategory === cat;
           return (
             <button
               key={cat}
               onClick={() => onCategoryChange(cat)}
               className={cn(
                 "w-full flex items-center gap-3 px-5 py-4 rounded-2xl transition-all text-xs font-bold",
-                selectedCategory === cat ? "text-slate-900 bg-slate-100" : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                isActive 
+                  ? "text-white shadow-lg" 
+                  : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
               )}
+              style={isActive ? { backgroundColor: config.color, shadowColor: `${config.color}20` } : {}}
             >
-              <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: config.color }} />
+              <div className={cn("w-2 h-2 rounded-full bg-white", !isActive && "opacity-100")} 
+                   style={!isActive ? { backgroundColor: config.color } : {}} />
               <span>{cat}</span>
             </button>
           );

@@ -212,7 +212,9 @@ export default function Dashboard() {
               <section className="bg-white rounded-[2.5rem] border border-slate-200 p-6 lg:p-10 shadow-sm">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
                   <div>
-                    <h2 className="text-xl lg:text-2xl font-extrabold tracking-tight">Tugas Terdekat</h2>
+                    <h2 className="text-xl lg:text-2xl font-extrabold tracking-tight">
+                      {selectedCategory === 'All' ? 'Tugas Terdekat' : `Daftar ${selectedCategory}`}
+                    </h2>
                     <p className="text-sm text-slate-400">Total {filteredTasks.length} jadwal aktif.</p>
                   </div>
                   <div className="flex gap-2 w-full sm:w-auto">
