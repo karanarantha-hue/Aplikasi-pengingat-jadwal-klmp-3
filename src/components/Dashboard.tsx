@@ -19,6 +19,16 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  const handleCloudSync = () => {
+    setIsSyncing(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsSyncing(false);
+      alert('Data berhasil disinkronisasi ke Cloud (Local Storage)!');
+    }, 1500);
+  };
 
   const notifications = [
     { id: 1, title: 'Tugas Matematika', message: 'Deadline dalam 2 jam!', time: '2j yang lalu' },
@@ -92,9 +102,30 @@ export default function Dashboard() {
           </div>
           
           <div className="flex items-center gap-3 lg:gap-6">
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-green-50 text-black rounded-full border border-green-100">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-wider">Cloud Terkoneksi</span>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={handleCloudSync}
+                disabled={isSyncing}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-2 rounded-xl border transition-all",
+                  isSyncing 
+                    ? "bg-slate-50 border-slate-100 text-slate-400" 
+                    : "bg-green-50 border-green-100 text-green-700 hover:bg-green-100"
+                )}
+              >
+                <Cloud className={cn("w-4 h-4", isSyncing && "animate-spin")} />
+                <span className="text-[10px] font-black uppercase tracking-wider hidden sm:block">
+                  {isSyncing ? 'Syncing...' : 'Sinkronisasi'}
+                </span>
+              </button>
+              
+              <button 
+                onClick={() => setIsAddFriendModalOpen(true)}
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 transition-all"
+              >
+                <Share2 className="w-4 h-4" />
+                <span className="text-[10px] font-black uppercase tracking-wider">Kolaborasi</span>
+              </button>
             </div>
             <div className="relative">
               <button 
@@ -184,16 +215,29 @@ export default function Dashboard() {
                 <Cloud className="w-32 h-32" />
               </div>
               <div>
-                <h3 className="text-xs font-black text-black uppercase tracking-widest mb-6">Cloud & Kolaborasi</h3>
+                <h3 className="text-xs font-black text-white/50 uppercase tracking-widest mb-6 px-1">Cloud & Kolaborasi</h3>
                 <div className="space-y-3 relative z-10">
-                  <div className="bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
-                    <p className="text-[10px] text-black font-black mb-1 uppercase tracking-wider">Sync Berhasil</p>
-                    <p className="text-sm font-black text-black">Data aman di awan.</p>
-                  </div>
-                  <div className="bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
-                    <p className="text-[10px] text-black font-black mb-1 uppercase tracking-wider">Shared Tugas</p>
-                    <p className="text-sm font-black text-black">2 teman baru bergabung.</p>
-                  </div>
+                  <button 
+                    onClick={handleCloudSync}
+                    disabled={isSyncing}
+                    className="w-full text-left bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors group/sync"
+                  >
+                    <p className="text-[10px] text-white/60 font-black mb-1 uppercase tracking-wider">Status Penyimpanan</p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-black text-white">{isSyncing ? 'Sedang Sinkron...' : 'Data Aman di Cloud'}</p>
+                      <Cloud className={cn("w-4 h-4 text-white/40", isSyncing && "animate-bounce")} />
+                    </div>
+                  </button>
+                  <button 
+                    onClick={() => setIsAddFriendModalOpen(true)}
+                    className="w-full text-left bg-white/10 p-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors group/collab"
+                  >
+                    <p className="text-[10px] text-white/60 font-black mb-1 uppercase tracking-wider">Grup Belajar</p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-black text-white">2 Teman Aktif</p>
+                      <Users className="w-4 h-4 text-white/40" />
+                    </div>
+                  </button>
                 </div>
               </div>
               <div className="pt-6 relative z-10">
