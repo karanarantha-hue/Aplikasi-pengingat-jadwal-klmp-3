@@ -138,29 +138,62 @@ export default function Dashboard() {
 
               <AnimatePresence>
                 {showNotifications && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="absolute right-0 mt-4 w-80 bg-white rounded-3xl border border-slate-200 shadow-2xl z-50 p-6"
-                  >
-                    <div className="flex justify-between items-center mb-6">
-                      <h4 className="font-black text-sm uppercase tracking-widest text-slate-900">Notifikasi</h4>
-                      <span className="text-[10px] font-bold text-white bg-black px-2 py-1 rounded-full">New</span>
-                    </div>
-                    <div className="space-y-4">
-                      {notifications.map((n) => (
-                        <div key={n.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer group">
-                          <p className="text-xs font-black text-slate-900 mb-1 group-hover:text-black transition-colors">{n.title}</p>
-                          <p className="text-[11px] text-slate-500 mb-2">{n.message}</p>
-                          <p className="text-[10px] font-bold text-slate-400">{n.time}</p>
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => setShowNotifications(false)}
+                      className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[60]"
+                    />
+                    <motion.div
+                      initial={{ x: '100%' }}
+                      animate={{ x: 0 }}
+                      exit={{ x: '100%' }}
+                      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                      className="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[70] p-8 lg:p-10 border-l border-slate-100"
+                    >
+                      <div className="flex justify-between items-center mb-10">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
+                            <Bell className="text-white w-5 h-5" />
+                          </div>
+                          <h4 className="font-black text-lg uppercase tracking-tight text-slate-900">Notifikasi</h4>
                         </div>
-                      ))}
-                    </div>
-                    <button className="w-full mt-6 py-3 border-t border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">
-                      Lihat Semua
-                    </button>
-                  </motion.div>
+                        <button 
+                          onClick={() => setShowNotifications(false)}
+                          className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
+                        >
+                          <X className="w-6 h-6 text-slate-400" />
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-4 overflow-y-auto no-scrollbar h-[calc(100vh-280px)]">
+                        {notifications.map((n) => (
+                          <div key={n.id} className="p-5 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer group">
+                            <div className="flex justify-between items-start mb-2">
+                              <p className="text-xs font-black text-slate-900 group-hover:text-black transition-colors">{n.title}</p>
+                              <span className="w-2 h-2 bg-black rounded-full" />
+                            </div>
+                            <p className="text-[12px] text-slate-500 mb-3 leading-relaxed">{n.message}</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{n.time}</p>
+                          </div>
+                        ))}
+                        {notifications.length === 0 && (
+                          <div className="flex flex-col items-center justify-center py-20 text-slate-300">
+                            <Bell className="w-12 h-12 mb-4 opacity-20" />
+                            <p className="text-sm font-bold">Tidak ada notifikasi baru</p>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="absolute bottom-10 left-8 right-8">
+                        <button className="w-full py-5 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] hover:bg-slate-100 hover:text-slate-900 transition-all">
+                          Bersihkan Semua
+                        </button>
+                      </div>
+                    </motion.div>
+                  </>
                 )}
               </AnimatePresence>
             </div>
