@@ -5,13 +5,13 @@ import TaskList from './TaskList';
 import AddTaskModal from './AddTaskModal';
 import AddFriendModal from './AddFriendModal';
 import { useTasks } from '../hooks/useTasks';
-import { Category, ViewMode } from '../types';
+import { Category, ViewMode, Task } from '../types';
 import { Search, Bell, User, Cloud, Share2, Users, ArrowUpRight, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 
 export default function Dashboard() {
-  const { tasks, categories, addTask, toggleTask, deleteTask } = useTasks();
+  const { tasks, categories, addTask: originalAddTask, toggleTask, deleteTask } = useTasks();
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +26,44 @@ export default function Dashboard() {
   const [hasNewNotifications, setHasNewNotifications] = useState(true);
   const [notifiedTaskIds, setNotifiedTaskIds] = useState<Set<string>>(new Set());
 
+  // Wrap addTask to add a system notification
+  const addTask = (task: Omit<Task, 'id' | 'createdAt' | 'completed'>) => {
+    originalAddTask(task);
+    const newNotif = {
+      id: `created-${Date.now()}`,
+      title: 'Tugas Disimpan',
+      message: `Jadwal "${task.title}" telah aktif dan pengingat disetel.`,
+      time: 'Baru saja',
+      isNew: true
+    };
+    setActiveNotifications(prev => [newNotif, ...prev]);
+    setHasNewNotifications(true);
+    setIsModalOpen(false);
+  };
+
+  // Function to play notification sound
+  const playNotificationSound = () => {
+    try {
+      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.05);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch (e) {
+      console.log('Audio playback failed', e);
+    }
+  };
+
   const handleCloudSync = () => {
     setIsSyncing(true);
     // Simulate API call
@@ -39,35 +77,39 @@ export default function Dashboard() {
   React.useEffect(() => {
     const checkTasks = () => {
       const now = new Date();
-      const currentNotifications = [...activeNotifications];
       let foundNew = false;
+      const newNotifiedIds = new Set(notifiedTaskIds);
+      const newNotifications = [...activeNotifications];
 
       tasks.forEach(task => {
         if (!task.completed && task.dueDate && !notifiedTaskIds.has(task.id)) {
           const dueDate = new Date(task.dueDate);
-          // Check if due date is now or in the past (but was just missed/reached)
+          
+          // Trigger if time is reached or past
           if (dueDate <= now) {
             const newNotif = {
-              id: `notif-${task.id}`,
+              id: `notif-${task.id}-${Date.now()}`,
               title: `Waktunya: ${task.title}`,
-              message: `Jadwal ${task.category} Anda sudah tiba!`,
+              message: `Jadwal ${task.category} Anda sudah tiba! Segera kerjakan.`,
               time: 'Sekarang',
               isNew: true
             };
-            currentNotifications.unshift(newNotif);
-            setNotifiedTaskIds(prev => new Set(prev).add(task.id));
+            newNotifications.unshift(newNotif);
+            newNotifiedIds.add(task.id);
             foundNew = true;
           }
         }
       });
 
       if (foundNew) {
-        setActiveNotifications(currentNotifications);
+        setActiveNotifications(newNotifications);
         setHasNewNotifications(true);
+        setNotifiedTaskIds(newNotifiedIds);
+        playNotificationSound();
       }
     };
 
-    const interval = setInterval(checkTasks, 60000); // Check every minute
+    const interval = setInterval(checkTasks, 15000); // Check more frequently (every 15 seconds)
     checkTasks(); // Initial check
 
     return () => clearInterval(interval);
